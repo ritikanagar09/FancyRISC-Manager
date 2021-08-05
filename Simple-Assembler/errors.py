@@ -1,6 +1,6 @@
 def check(category, line):  # STUB
   found = True
-  errors = ["TESTING ERROR", "ANOTHER TESTING ERROR"]  # Might make this a dictionary
+  errors = ["TESTING ERROR", "ANOTHER TESTING ERROR", "YET ANOTHER TESTING ERROR"]  # Might make this a dictionary
   return (found, errors)  
 
 class Logger():
