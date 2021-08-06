@@ -1,11 +1,12 @@
 from errors import Logger, check
 from reader import identify, parse
+import sys
 
 input = "TEST"  # Stub
 err = Logger()
 commands = []
 
-for line_num, line in enumerate(input):
+for line_num, line in enumerate(sys.stdin):
 	category = identify(line)
 	error = check(category, line)
 	
