@@ -1,4 +1,11 @@
-def check(category, line):  # STUB
+import json
+
+def check_variant(variant, line):  
+  found = True
+  errors = ["TESTING ERROR", "ANOTHER TESTING ERROR", "YET ANOTHER TESTING ERROR"]  # Might make this a dictionary
+  return (found, errors)  
+
+def check_category(category, line): 
   found = True
   errors = ["TESTING ERROR", "ANOTHER TESTING ERROR", "YET ANOTHER TESTING ERROR"]  # Might make this a dictionary
   return (found, errors)  

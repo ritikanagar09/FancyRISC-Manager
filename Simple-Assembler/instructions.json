@@ -1,0 +1,8 @@
+{
+  "add":{
+    "opcode":"0b00000",
+    "semantics":"Performs reg1 = reg2+ reg3. If thecomputation overflows, then theo verflow flag is set",
+    "syntax":"add reg1 reg2 reg3",
+    "type":"A"
+  }
+}
