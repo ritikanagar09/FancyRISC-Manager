@@ -1,32 +1,33 @@
 import sys
 
-from errors import Logger, check_category, check_variant
-from reader import identify_category, identify_variant, parse
+from errors import Logger, check_cat, check_variant
+from reader import find_cat, find_variant, encode
 
 err = Logger()
 commands = []
 
 for line_num, line in enumerate(sys.stdin):
-	variant = identify_variant(line)  # Identifies the variant of command
-	error = check_variant(variant, line)  # Checks for broad syntax errors
+	variant = find_variant(line)  
+	error = check_variant(variant, line)  
 
-	if variant == 'label':  # Will always be followed by instruction
+	if variant == 'label':  # will always be followed by instruction
 		pass
 
-	if variant in ('label','instruction'):  # Common handler for instructions with and without label
-		category = identify_category(line)  # Identifies type of instruction
-		error = check_category(category, line)  # Checks if instruction fits the type
+	if variant in ('label','instruction'):  # common handler for instructions with and without label
+		# category identification
+		cat = find_cat(line)  
+		error = check_cat(cat, line) 
 	
-		if (error[0] == True):  # Error is found
+		# error handling
+		if (error[0] == True):
 			err.log(line_num, error)
 			continue
 
-		buffer = parse(category, line)
+		# encoding 
+		buffer = encode(cat, line)
 
 		commands.append(buffer)
 
 	elif variant == 'variable':
 		pass
 
-	elif variant == 'label':
-		pass
