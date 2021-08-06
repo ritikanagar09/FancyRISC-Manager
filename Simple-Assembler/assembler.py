@@ -2,7 +2,6 @@ from errors import Logger, check
 from reader import identify, parse
 import sys
 
-input = "TEST"  # Stub
 err = Logger()
 commands = []
 
