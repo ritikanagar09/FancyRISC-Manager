@@ -8,5 +8,43 @@
 			"reg2":3,
 			"reg3":3
 		}
+	},
+	"B":{
+		"name":"Register and Immediate Type",
+		"encoding":{
+			"opcode":5,
+			"reg1":3,
+			"imm":8
+		}
+	},
+	"C":{
+		"name":"2 Register Type",
+		"encoding":{
+			"opcode":5,
+			"unused":5,
+			"reg1":3,
+			"reg2":3
+		}
+	},"D":{
+		"name":"Register and Memory Address Type",
+		"encoding":{
+			"opcode":5,
+			"reg1":3,
+			"mem":8
+		}
+	},"E":{
+		"name":"Memory Address Type",
+		"encoding":{
+			"opcode":5,
+			"unused":3,
+			"mem":8
+		}
+	},"F":{
+		"name":"Halt Instruction Specific",
+		"encoding":{
+			"opcode":5,
+			"unused":11
+		}
 	}
+	
 }
