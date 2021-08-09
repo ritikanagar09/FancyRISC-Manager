@@ -4,5 +4,11 @@
 		"semantics":"Performs reg1 = reg2+ reg3. If the computation overflows, then the overflow flag is set",
 		"syntax":"add reg1 reg2 reg3",
 		"type":"A"
+	},
+	"sub":{
+		"opcode":"0b00001",
+		"semantics":"Performs reg1 = reg2-reg3. If the computation overflows, then the overflow flag is set",
+		"syntax":"sub reg1 reg2 reg3",
+		"type":"A"
 	}
 }
