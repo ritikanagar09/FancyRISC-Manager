@@ -3,7 +3,7 @@ import json
 def check_variant(variant, line):  
 	"checks if the command is broadly valid for the variant identified"
 
-	found = True
+	found = False
 	errors = ["TESTING ERROR", "ANOTHER TESTING ERROR", "YET ANOTHER TESTING ERROR"]  # Might make this a dictionary
 	return (found, errors)  
 
