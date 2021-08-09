@@ -19,7 +19,7 @@ for line_num, line in enumerate(fl):
 	line = line.strip()
 
 	variant = find_variant(line)
-	error = check_variant(variant, line)
+	error = check_variant(variant, line, PC)
 
 	if (error[0] == True):  # variant error handling
 		err.log_error(line_num, error[1])
@@ -28,7 +28,10 @@ for line_num, line in enumerate(fl):
 	if variant == 'blank':
 		continue
 
-	PC += 1  # doesn't include blank lines
+	if variant == 'variable':
+		mem.store_var(line[4:]) # excluding 'var '
+
+	PC += 1  # doesn't include blank lines and variable definitions
 
 	if variant == 'label':  # will always be followed by instruction
 		mem.store_label(line.split(':')[0], PC)
@@ -47,9 +50,6 @@ for line_num, line in enumerate(fl):
 		buffer = encode(cat, line, mem)
 
 		commands.append(buffer)
-
-	elif variant == 'variable':
-		mem.store_var(line[4:]) # excluding 'var '
 
 print('\n'.join(err.get_errors()))
 
