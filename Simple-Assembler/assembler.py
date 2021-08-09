@@ -7,15 +7,23 @@ from memory import Memory
 err = Logger()
 
 commands = []
-mem0 = len([x for x in sys.stdin if x.strip() != ''])
+#fl = sys.stdin
+fl = "var x\nadd $1 $2".split('\n')
+
+# only include instructions in memory count
+mem0 = len([x for x in fl if x.strip() != '' and not x.strip().startswith('var')])
 
 mem = Memory(mem0)
 PC = 0
-for line_num, line in enumerate(sys.stdin):
+for line_num, line in enumerate(fl):
 	line = line.strip()
 
 	variant = find_variant(line)
 	error = check_variant(variant, line)
+
+	if (error[0] == True):  # variant error handling
+		err.log_error(line_num, error[1])
+		continue 
 
 	if variant == 'blank':
 		continue
@@ -30,9 +38,9 @@ for line_num, line in enumerate(sys.stdin):
 		cat = find_cat(line)  
 		error = check_cat(cat, line, mem) 
 	
-		# error handling
+		# category error handling
 		if (error[0] == True):
-			err.log(line_num, error)
+			err.log_error(line_num, error[1])
 			continue
 
 		# encoding 
@@ -42,4 +50,6 @@ for line_num, line in enumerate(sys.stdin):
 
 	elif variant == 'variable':
 		mem.store_var(line[4:]) # excluding 'var '
+
+print('\n'.join(err.get_errors()))
 

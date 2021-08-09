@@ -21,10 +21,12 @@ class Logger():
 	def __init__(self):
 		self.log = []
 	
-	def log_error(self,error):
+	def log_error(self,lnum,errors):
 		"adds an error to the log"
-		
-		self.log.append(error)
+		msg = f"ERROR/S spotted on Line {lnum}\n"
+		for error in errors:
+			msg += f"{error}\n"
+		self.log.append(msg)
 
 	def get_errors(self):
 		"gets all errors in the log"
