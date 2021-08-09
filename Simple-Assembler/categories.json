@@ -1,6 +1,6 @@
 {
 	"A":{
-		"name":"3 Register Type",
+		"name":"3 register Type",
 		"encoding":{
 			"opcode":5,
 			"unused":2,
@@ -8,5 +8,43 @@
 			"reg2":3,
 			"reg3":3
 		}
+	},
+	"B":{
+		"name":"register and immediate Type",
+		"encoding":{
+			"opcode":5,
+			"reg1":3,
+			"Immediate Value":8
+		}
+	},
+	"C":{
+		"name":"2 registers Type",
+		"encoding":{
+			"opcode":5,
+			"unused":5,
+			"reg1":3,
+			"reg2":3
+		}
+	},"D":{
+		"name":"register and memory address type",
+		"encoding":{
+			"opcode":5,
+			"reg1":3,
+			"Memory Address":8
+		}
+	},"E":{
+		"name":"memory address type",
+		"encoding":{
+			"opcode":5,
+			"unused":3,
+			"Memory Address":8
+		}
+	},"F":{
+		"name":"halt",
+		"encoding":{
+			"opcode":5,
+			"unused":11
+		}
 	}
+	
 }
