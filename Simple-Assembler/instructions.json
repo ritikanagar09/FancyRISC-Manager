@@ -5,6 +5,7 @@
 		"syntax":"add reg1 reg2 reg3",
 		"type":"A"
 	},
+	
 	"sub":{
 		"opcode":"0b00001",
 		"semantics":"Performs reg1 = reg2 - reg3. In case reg3 In case reg3 > reg2, 0 is writte to reg1 and overflow flag is set. ",
