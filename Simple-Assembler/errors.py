@@ -11,7 +11,16 @@ def check_variant(variant, line, PC):
 		if line.count(':') >= 2:
 			found = True
 			errors.append('the ":" symbol cannot be used multiple times in the same line')
-
+		if line[line.index(':')-1]==' ':
+			found = True
+			errors.append('Label has whitespace before :')
+	if variant == 'variable':
+		if PC>0:
+			found = True
+			errors.append('Variable defined after start of program')
+	if variant == 'instruction':		
+		if 
+	
 	"""
 	Look up f-strings and split function in python! They will be helpful here. 
 
