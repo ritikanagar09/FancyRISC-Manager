@@ -1,127 +1,160 @@
 {
-	"add":{
-		"opcode":"0b00000",
-		"semantics":"Performs reg1 = reg2 + reg3. If the computation overflows, then the overflow flag is set",
-		"syntax":"add reg1 reg2 reg3",
-		"type":"A"
-	},
-	
-	"sub":{
-		"opcode":"0b00001",
-		"semantics":"Performs reg1 = reg2 - reg3. In case reg3 In case reg3 > reg2, 0 is writte to reg1 and overflow flag is set. ",
-		"syntax":"sub reg1 reg2 reg3",
-		"type":"A"
-	},
-	 "mov":{
-		 "opcode":"0b00010",
-		"semantics":"Performs reg1 = $Imm . where Imm is a 8 bit value.",
-		"syntax":"mov reg1 $Imm",
-		"type":"B"
-         },
-	 "mov":{
-		 "opcode":"0b00011",
-		"semantics":"Performs reg1 = reg2 ",
-		"syntax":"mov reg1 reg2",
-		"type":"C"
-         }
-         "ld":{
-		"opcode":"0b00100",
-		"semantics":" Loads data from mem_addr into reg1.",
-		"syntax":"ld reg1 mem_addr",
-		"type":"D"
-	},
-         "st":{
-		"opcode":"0b00101",
-		"semantics":"Stores data from reg1 to mem_addr. ",
-		"syntax":"st reg1 mem_addr",
-		"type":"D"
-	},
-         "mul":{
-		"opcode":"0b00110",
-		"semantics":"Performs reg1 = reg2 x reg3. If the computation overflows, then the overflow flag is set. ",
-		"syntax":"mul reg1 reg2 reg3",
-		"type":"A"
-	},
-         "div":{
-		"opcode":"0b00111",
-		"semantics":"Performs reg3/reg4. Stores the quotient in R0 and the remainder in R1. ",
-		"syntax":"div reg3 reg4",
-		"type":"C"
-	},
- 	"rs":{
-		"opcode":"0b01000",
-		"semantics":"Right shifts reg1 by $Imm, where $Imm is an 8 bit value. ",
-		"syntax":"rs reg1 $Imm",
-		"type":"B"
-	},
-	"rs":{
-		"opcode":"0b01001",
-		"semantics":"Left shifts reg1 by $Imm, where $Imm is an 8 bit value. ",
-		"syntax":"ls reg1 $Imm",
-		"type":"B"
-	},
-	"xor":{
-		"opcode":"0b01010",
-		"semantics":"Performs bitwise XOR of reg2 and reg3. Stores the result in reg1. ",
-		"syntax":"xor reg1 reg2 reg3",
-		"type":"A"
-	},
-	"or":{
-		"opcode":"0b01011",
-		"semantics":"Performs bitwise OR of reg2 and reg3. Stores the result in reg1. ",
-		"syntax":"or reg1 reg2 reg3",
-		"type":"A"
-	},
-	"and":{
-		"opcode":"0b01100",
-		"semantics":"Performs bitwise AND of reg2 and reg3. Stores the result in reg1. ",
-		"syntax":"and reg1 reg2 reg3",
-		"type":"A"
-	},
-	"not":{
-		"opcode":"0b01101",
-		"semantics":"Performs bitwise NOT of reg2. Stores the result in reg1. ",
-		"syntax":"not reg1 reg2 ",
-		"type":"C"
-	},
-	"cmp":{
-		"opcode":"0b01110",
-		"semantics":"Compares reg1 and reg2 and sets up the FLAGS register.",
-		"syntax":"cmp reg1 reg2 ",
-		"type":"C"
-	},
-	"jmp":{
-		"opcode":"0b01111",
-		"semantics":"Jumps to mem_addr where mem_addr is a memory address",
-		"syntax":"jmp mem_addr ",
-		"type":"E"
-	},
-	"jlt":{
-		"opcode":"0b10000",
-		"semantics":"Jumps to mem_addr if the leass than flag is set (less than flag=1), where mem_addr is a memory address",
-		"syntax":"jlt mem_addr ",
-		"type":"E"
-	},
-	"jgt":{
-		"opcode":"0b10001",
-		"semantics":"Jumps to mem_addr if the greater than flag is set (greater than flag = 1), where mem_addr is a memory address",
-		"syntax":"jgt mem_addr ",
-		"type":"E"
-	},
-	"je":{
-		"opcode":"0b10010",
-		"semantics":"Jumps to mem_addr if the equal flag is set (equal flag = 1), where mem_addr is a memory address",
-		"syntax":"je mem_addr ",
-		"type":"E"
-	},
-	"hlt":{
-		"opcode":"0b10011",
-		"semantics":"Stops the machine from executing until reset",
-		"syntax":"hlt ",
-		"type":"F"
-	},
-        
-        
-        
-        
+  "add": [
+    {
+      "opcode": "0b00000",
+      "semantics": "Performs reg1 = reg2 + reg3. If the computation overflows, then the overflow flag is set",
+      "syntax": "add reg1 reg2 reg3",
+      "type": "A"
+    }
+  ],
+  "sub": [
+    {
+      "opcode": "0b00001",
+      "semantics": "Performs reg1 = reg2 - reg3. In case reg3 In case reg3 > reg2, 0 is writte to reg1 and overflow flag is set. ",
+      "syntax": "sub reg1 reg2 reg3",
+      "type": "A"
+    }
+  ],
+  "mov": [
+    {
+      "opcode": "0b00010",
+      "semantics": "Performs reg1 = $Imm . where Imm is a 8 bit value.",
+      "syntax": "mov reg1 $Imm",
+      "type": "B"
+    },
+    {
+      "opcode": "0b00011",
+      "semantics": "Performs reg1 = reg2 ",
+      "syntax": "mov reg1 reg2",
+      "type": "C"
+    }
+  ],
+  "ld": [
+    {
+      "opcode": "0b00100",
+      "semantics": " Loads data from mem_addr into reg1.",
+      "syntax": "ld reg1 mem_addr",
+      "type": "D"
+    }
+  ],
+  "st": [
+    {
+      "opcode": "0b00101",
+      "semantics": "Stores data from reg1 to mem_addr. ",
+      "syntax": "st reg1 mem_addr",
+      "type": "D"
+    }
+  ],
+  "mul": [
+    {
+      "opcode": "0b00110",
+      "semantics": "Performs reg1 = reg2 x reg3. If the computation overflows, then the overflow flag is set. ",
+      "syntax": "mul reg1 reg2 reg3",
+      "type": "A"
+    }
+  ],
+  "div": [
+    {
+      "opcode": "0b00111",
+      "semantics": "Performs reg3/reg4. Stores the quotient in R0 and the remainder in R1. ",
+      "syntax": "div reg3 reg4",
+      "type": "C"
+    }
+  ],
+  "rs": [
+    {
+      "opcode": "0b01000",
+      "semantics": "Right shifts reg1 by $Imm, where $Imm is an 8 bit value. ",
+      "syntax": "rs reg1 $Imm",
+      "type": "B"
+    }
+	],
+	"ls":[
+    {
+      "opcode": "0b01001",
+      "semantics": "Left shifts reg1 by $Imm, where $Imm is an 8 bit value. ",
+      "syntax": "ls reg1 $Imm",
+      "type": "B"
+    }
+  ],
+  "xor": [
+    {
+      "opcode": "0b01010",
+      "semantics": "Performs bitwise XOR of reg2 and reg3. Stores the result in reg1. ",
+      "syntax": "xor reg1 reg2 reg3",
+      "type": "A"
+    }
+  ],
+  "or": [
+    {
+      "opcode": "0b01011",
+      "semantics": "Performs bitwise OR of reg2 and reg3. Stores the result in reg1. ",
+      "syntax": "or reg1 reg2 reg3",
+      "type": "A"
+    }
+  ],
+  "and": [
+    {
+      "opcode": "0b01100",
+      "semantics": "Performs bitwise AND of reg2 and reg3. Stores the result in reg1. ",
+      "syntax": "and reg1 reg2 reg3",
+      "type": "A"
+    }
+  ],
+  "not": [
+    {
+      "opcode": "0b01101",
+      "semantics": "Performs bitwise NOT of reg2. Stores the result in reg1. ",
+      "syntax": "not reg1 reg2 ",
+      "type": "C"
+    }
+  ],
+  "cmp": [
+    {
+      "opcode": "0b01110",
+      "semantics": "Compares reg1 and reg2 and sets up the FLAGS register.",
+      "syntax": "cmp reg1 reg2 ",
+      "type": "C"
+    }
+  ],
+  "jmp": [
+    {
+      "opcode": "0b01111",
+      "semantics": "Jumps to mem_addr where mem_addr is a memory address",
+      "syntax": "jmp mem_addr ",
+      "type": "E"
+    }
+  ],
+  "jlt": [
+    {
+      "opcode": "0b10000",
+      "semantics": "Jumps to mem_addr if the leass than flag is set (less than flag=1), where mem_addr is a memory address",
+      "syntax": "jlt mem_addr ",
+      "type": "E"
+    }
+  ],
+  "jgt": [
+    {
+      "opcode": "0b10001",
+      "semantics": "Jumps to mem_addr if the greater than flag is set (greater than flag = 1), where mem_addr is a memory address",
+      "syntax": "jgt mem_addr ",
+      "type": "E"
+    }
+  ],
+  "je": [
+    {
+      "opcode": "0b10010",
+      "semantics": "Jumps to mem_addr if the equal flag is set (equal flag = 1), where mem_addr is a memory address",
+      "syntax": "je mem_addr ",
+      "type": "E"
+    }
+  ],
+  "hlt": [
+    {
+      "opcode": "0b10011",
+      "semantics": "Stops the machine from executing until reset",
+      "syntax": "hlt ",
+      "type": "F"
+    }
+  ]
 }
