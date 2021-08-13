@@ -3,6 +3,7 @@ import json
 def check_variant(variant, line, PC):  
 	"checks if the command is broadly valid for the variant identified"
 
+	# Default return values
 	found = False
 	errors = []
 

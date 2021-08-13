@@ -1,8 +1,6 @@
 import json
 
 def find_variant(line):
-	IN - "var X"
-	OUT - "variable"
 	"find what variant of command is present in this line, and returns it"
 
 	if line == '':
