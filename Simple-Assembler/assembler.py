@@ -16,7 +16,7 @@ mem0 = len([x for x in fl if x.strip() != '' and not x.strip().startswith('var')
 mem = Memory(mem0)
 PC = 0
 for line_num, line in enumerate(fl):
-	line = line.strip()
+	line = line.strip() 
 
 	variant = find_variant(line)
 	error = check_variant(variant, line, PC)
@@ -30,6 +30,7 @@ for line_num, line in enumerate(fl):
 
 	if variant == 'variable':
 		mem.store_var(line[4:]) # excluding 'var '
+		continue
 
 	PC += 1  # doesn't include blank lines and variable definitions
 
