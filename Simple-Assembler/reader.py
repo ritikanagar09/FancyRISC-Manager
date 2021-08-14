@@ -36,4 +36,4 @@ cats = json.load(open('categories.json'))
 def encode(ctg,cmd,mem):
 	"encodes command according to its category"
 
-	return 0b01000111101110
+	return "01000111101110"
