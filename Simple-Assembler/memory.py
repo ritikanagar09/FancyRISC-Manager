@@ -30,7 +30,7 @@ class Memory():
   def var_addr(self,name):
     "returns the memory address of a named variable"
 
-    if name not in self.mem_labels:
+    if name not in self.mem_vars:
       raise ValueError("check if the variable is present in memory before using this function!")
 
     return self.mem_vars[name]

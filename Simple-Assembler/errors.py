@@ -3,6 +3,12 @@ import re
 import memory
 cats = json.load(open('categories.json'))
 
+"""
+A few notes about error handling for the person correcting this:
+> I have chosen to allow blank lines after the hlt instruction at the end. I think   	those are commonly seen in programs and it is acceptable to ignore them.
+> It is told to mark errors for invalid usage of FLAGS register or accidental swapping of label and variable names. I have merged these into invalid register name / invalid label name / invalid variable name errors, because I think none of these are things that deserve special errors. That being said, the errors are definitely displayed.
+"""
+
 def check_variant(variant, line, PC):  
 	"checks if the command is broadly valid for the variant identified"
 
@@ -77,16 +83,20 @@ def invalid_imm(imm: str):
 		return (True,f"{imm} lies beyond the integer size limit")
 	return (False)
 	
-def check_cat(cat, line, mem: memory.Memory): 
+def check_cat(cat, line, mem: memory.Memory,lookahead): 
 	"checks if the command is strictly valid for the given category"
 
 	params = line.split()
-	l = len(params)
-	l0 = len([x for x in cats[cat]['encoding'] if x != "unused"])
 	errors = []
 
+	if cat == 'unidentified':
+		errors.append(f"instruction {params[0]} not identified")
+		return (True, errors)
+
+	l = len(params)
+	l0 = len([x for x in cats[cat]['encoding'] if x != "unused"])
 	if l0 != l:
-		errors.append(f"{l-1} parameters are given, but the {params[0]} instruction expects {l0-1}")
+		errors.append(f"{l-1} parameter/s given, but the {params[0]} instruction expects {l0-1}")
 
 	if cat == 'A' or cat == 'C':
 		try:
@@ -123,7 +133,14 @@ def check_cat(cat, line, mem: memory.Memory):
 		except:
 			pass
 		
-	found = len(errors) == 0
+	elif cat == 'F':
+		if lookahead:
+			errors.append('hlt instruction used before end of program.')
+	
+	if not lookahead and cat != 'F':
+		errors.append('hlt instruction not found on last line of program.')
+
+	found = len(errors) != 0
 	return (found, errors)  
 
 class Logger():
@@ -132,9 +149,15 @@ class Logger():
 	log = []
 	def __init__(self):
 		self.log = []
-	
+
+	def errors_present(self):
+		"checks if there are any errors in the log"
+
+		return len(self.log) > 0
+
 	def log_error(self,lnum,errors):
 		"adds an error to the log"
+
 		msg = f"ERROR/S spotted on Line {lnum}\n"
 		for error in errors:
 			msg += f"{error}\n"
