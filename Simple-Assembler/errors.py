@@ -1,4 +1,7 @@
 import json
+import re
+import memory
+cats = json.load(open('categories.json'))
 
 def check_variant(variant, line, PC):  
 	"checks if the command is broadly valid for the variant identified"
@@ -19,7 +22,7 @@ def check_variant(variant, line, PC):
 			found = True
 			errors.append('Variable defined after start of program')
 	if variant == 'instruction':		
-		if 
+		pass 
 	
 	"""
 	Look up f-strings and split function in python! They will be helpful here. 
@@ -59,11 +62,68 @@ def check_variant(variant, line, PC):
 	#errors = ["TESTING ERROR", "ANOTHER TESTING ERROR", "YET ANOTHER TESTING ERROR"]  # Might make this a dictionary
 	return (found, errors)  
 
-def check_cat(cat, line, mem): 
+regnames = re.compile('R[0-6]')
+def invalid_registers(regs):
+	"returns the invalid registers from a list of register names"
+	return [x for x in regs if not regnames.fullmatch(x)]
+
+def invalid_imm(imm: str):
+	"returns invalidity and issue in an immediate"
+	if not imm[0] == '$':
+		return (True,"immediate name must start with '$' symbol")
+	if not imm[1:].isdigit():
+		return (True,f"{imm} is not a positive integer")
+	elif int(imm) > 255 or int(imm) < 0:
+		return (True,f"{imm} lies beyond the integer size limit")
+	return (False)
+	
+def check_cat(cat, line, mem: memory.Memory): 
 	"checks if the command is strictly valid for the given category"
 
-	found = True
-	errors = ["TESTING ERROR", "ANOTHER TESTING ERROR", "YET ANOTHER TESTING ERROR"]  # Might make this a dictionary
+	params = line.split()
+	l = len(params)
+	l0 = len([x for x in cats[cat]['encoding'] if x != "unused"])
+	errors = []
+
+	if l0 != l:
+		errors.append(f"{l-1} parameters are given, but the {params[0]} instruction expects {l0-1}")
+
+	if cat == 'A' or cat == 'C':
+		try:
+			if len(params) >= 1:
+				if len(invalid_registers(params[1:])) > 0:
+					errors.extend([f"invalid register name: {x}" for x in invalid_registers(params[1:])])
+		except:
+			pass
+	
+	elif cat == 'B':
+		try:
+			if len(invalid_registers([params[1]])) > 0:
+				errors.extend([f"invalid register name: {x}" for x in invalid_registers([params[1]])])
+
+			if invalid_imm(params[2])[0]:
+				errors.append(invalid_imm(params[2])[1])
+		except:
+			pass
+	
+	elif cat == 'D':
+		try:
+			if len(invalid_registers([params[1]])) > 0:
+				errors.extend([f"invalid register name: {x}" for x in invalid_registers([params[1]])])
+
+			if not mem.has_var(params[2]):
+				errors.append(f"invalid variable name: {params[2]}")
+		except:
+			pass
+	
+	elif cat == 'E':
+		try:
+			if not mem.has_label(params[1]):
+				errors.append(f"invalid label name: {params[1]}")
+		except:
+			pass
+		
+	found = len(errors) == 0
 	return (found, errors)  
 
 class Logger():

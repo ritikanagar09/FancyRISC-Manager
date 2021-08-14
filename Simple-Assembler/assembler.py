@@ -36,13 +36,14 @@ for line_num, line in enumerate(fl):
 
 	if variant == 'label':  # will always be followed by instruction
 		mem.store_label(line.split(':')[0], PC)
+		line = line.split(':')[1].lstrip()  # sets the line to the instruction, as the label's job is done
 
 	if variant in ('label','instruction'):  # common handler for instructions with and without label
 		# category identification
 		cat = find_cat(line)  
 		error = check_cat(cat, line, mem) 
 	
-		# category error handling
+		# handles instruction category-specific errors
 		if (error[0] == True):
 			err.log_error(line_num, error[1])
 			continue
