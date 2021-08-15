@@ -58,7 +58,10 @@ def encode(opc,ctg,cmd,mem: memory.Memory):
 		toret += f'{opc:05b}'
 		toret += f'{0:05b}'
 		toret += f'{int(params[1][1]):03b}'
-		toret += f'{int(params[2][1]):03b}'
+		try:
+			toret += f'{int(params[2][1]):03b}'
+		except ValueError:
+			toret += f'{7:03b}'
 
 	if ctg == 'D':
 		toret += f'{opc:05b}'
