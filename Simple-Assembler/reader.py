@@ -41,7 +41,7 @@ def encode(opc,ctg,cmd,mem: memory.Memory):
 
 	params = cmd.split()
 	toret = ""
-
+	
 	if ctg == 'A':
 		toret += f'{opc:05b}'
 		toret += f'{0:02b}'
@@ -72,7 +72,7 @@ def encode(opc,ctg,cmd,mem: memory.Memory):
 		toret += f'{opc:05b}'
 		toret += f'{0:03b}'
 		toret += f'{mem.label_addr(params[1]):08b}'
-
+		
 	elif ctg == 'F':
 		toret += f'{opc:05b}'
 		toret += f'{0:011b}'
