@@ -42,7 +42,28 @@ def encode(opc,ctg,cmd,mem: memory.Memory):
 	params = cmd.split()
 	toret = ""
 
-	if ctg == 'D':
+	if ctg == 'A':
+		toret += f'{opc:05b}'
+		toret += f'{0:02b}'
+		toret += f'{int(params[1][1]):03b}'
+		toret += f'{int(params[2][1]):03b}'
+		toret += f'{int(params[3][1]):03b}'
+	
+	elif ctg == 'B':
+		toret += f'{opc:05b}'
+		toret += f'{int(params[1][1]):03b}'
+		toret += f'{int(params[2][1:]):08b}'
+
+	elif ctg == 'C':
+		toret += f'{opc:05b}'
+		toret += f'{0:05b}'
+		toret += f'{int(params[1][1]):03b}'
+		try:
+			toret += f'{int(params[2][1]):03b}'
+		except ValueError:
+			toret += f'{7:03b}'
+
+	elif ctg == 'D':
 		toret += f'{opc:05b}'
 		toret += f'{int(params[1][1]):03b}'
 		toret += f'{mem.var_addr(params[2]):08b}'
@@ -51,5 +72,9 @@ def encode(opc,ctg,cmd,mem: memory.Memory):
 		toret += f'{opc:05b}'
 		toret += f'{0:03b}'
 		toret += f'{mem.label_addr(params[1]):08b}'
+
+	elif ctg == 'F':
+		toret += f'{opc:05b}'
+		toret += f'{0:011b}'
 
 	return toret

@@ -5,10 +5,10 @@ cats = json.load(open('categories.json'))
 
 """
 A few notes about error handling for the person correcting this:
-> I have chosen to allow blank lines after the hlt instruction at the end. I think   	those are commonly seen in programs and it is acceptable to ignore them.
+> I have chosen to allow blank lines after the hlt instruction at the end. I think those are commonly seen in programs and it is acceptable to ignore them.
 > It is told to mark errors for invalid usage of FLAGS register or accidental swapping of label and variable names. I have merged these into invalid register name / invalid label name / invalid variable name errors, because I think none of these are things that deserve special errors. That being said, the errors are definitely displayed.
 """
-
+insts = json.load(open('instructions.json'))
 def check_variant(variant, line, PC):  
 	"checks if the command is broadly valid for the variant identified"
 
@@ -27,51 +27,24 @@ def check_variant(variant, line, PC):
 		if PC>0:
 			found = True
 			errors.append('Variable defined after start of program')
-	if variant == 'instruction':		
-		pass 
-	
-	"""
-	Look up f-strings and split function in python! They will be helpful here. 
+	if variant == 'instruction':
+		params = line.split()	
+		if len(params) == 0 or params[0] not in insts:  # if invalid instruction category
+			found = True
+			errors.append('Instruction missing or unidentified')
 
-	PC can be ignored outside of variable definition statements. Blank statements will never call this function so they dont have to be considered
-	
-	TEST CASES	
-		IN - variant = 'variable', line = 'var pX', PC = 1
-		OUT - found = True, errors = ['Variable defined after start of program']
-
-		IN - variant = 'instruction', line = 'Zadd R1 R2 R2'
-		OUT - found = True, errors = ['Invalid Instruction Name']
-
-		IN - variant = 'label', line = 'mylabel : add R1 R2 R3'
-		OUT - found = True, errors = ['Label has whitespace before :']
-		[Try splitting by ':' character for this]
-
-		IN - variant = 'label', line = 'mylabel : Zadd R1 R2 R3'
-		OUT - found = True, errors = ['Label mylabel has whitespace before :', 'Invalid Instruction Name: Zadd']
-		^ If you cant think how to do this case then leave it. The part to the right of the : has to be a valid instruction as well
-
-		IMPORTANT - This test case is implemented in the code above!! => IN - variant = 'label', line = 'mylabel : hello : world' 
-		OUT - found = True, errors = ['the ":" symbol cannot be used multiple times in the same line']
-		^ do not display any other error if this is seen
-
-		IN - variant = 'instruction', line = 'add R1 R2 R3'
-		OUT - found = False, errors = []
-
-		IN - variant = 'variable', line = 'var x', PC = 0
-		OUT - found = False, errors = []
-
-		IN - variant = 'label', line = 'mylabel: add R1 R2 R3' 
-		OUT - found = False, errors = []
-	"""
-
-	#found = False
-	#errors = ["TESTING ERROR", "ANOTHER TESTING ERROR", "YET ANOTHER TESTING ERROR"]  # Might make this a dictionary
 	return (found, errors)  
 
-regnames = re.compile('R[0-6]')
+REGNAMES = re.compile('R[0-6]')
+FLAGS = 'FLAGS' 
+
 def invalid_registers(regs):
 	"returns the invalid registers from a list of register names"
-	return [x for x in regs if not regnames.fullmatch(x)]
+	return [x for x in regs if (not REGNAMES.fullmatch(x))]
+
+def invalid_registers_but_you_can_use_flags(regs):
+	"returns the invalid registers from a list of register names except flags are allowed"
+	return [x for x in regs if not (REGNAMES.fullmatch(x) or x == FLAGS)]
 
 def invalid_imm(imm: str):
 	"returns invalidity and issue in an immediate"
@@ -83,7 +56,7 @@ def invalid_imm(imm: str):
 		return (True,f"{imm} lies beyond the integer size limit")
 	return (False)
 	
-def check_cat(cat, line, mem: memory.Memory,lookahead): 
+def check_cat(opc,cat, line, mem: memory.Memory,lookahead): 
 	"checks if the command is strictly valid for the given category"
 
 	params = line.split()
@@ -99,12 +72,24 @@ def check_cat(cat, line, mem: memory.Memory,lookahead):
 		errors.append(f"{l-1} parameter/s given, but the {params[0]} instruction expects {l0-1}")
 
 	if cat == 'A' or cat == 'C':
-		try:
-			if len(params) >= 1:
+		if opc == 0b00011:
+			try:
+			
+				if len(invalid_registers([params[1]])) > 0:
+					errors.extend([f"invalid register name: {x}" for x in invalid_registers([params[1]])])
+				
+				if len(invalid_registers_but_you_can_use_flags([params[2]])) > 0:
+					print(invalid_registers_but_you_can_use_flags([params[2]]))
+					errors.extend([f"invalid register name: {x}" for x in invalid_registers([params[2]])])
+			except:
+				pass
+
+		else:
+			try:
 				if len(invalid_registers(params[1:])) > 0:
 					errors.extend([f"invalid register name: {x}" for x in invalid_registers(params[1:])])
-		except:
-			pass
+			except:
+				pass
 	
 	elif cat == 'B':
 		try:
