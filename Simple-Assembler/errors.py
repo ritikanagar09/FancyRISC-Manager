@@ -27,8 +27,13 @@ def check_variant(variant, line, PC):
 		if PC>0:
 			found = True
 			errors.append('Variable defined after start of program')
-	if variant == 'instruction':		
-		pass 
+	if variant == 'instruction':
+		params = line.split()	
+		if len(params) == 0 or params[0] not in insts:  		# if invalid instruction category
+			found = True
+			errors.append('Instruction missing or unidentified')
+		return (found, errors)
+		insts = json.load(open('instructions.json'))
 	
 	"""
 	Look up f-strings and split function in python! They will be helpful here. 
