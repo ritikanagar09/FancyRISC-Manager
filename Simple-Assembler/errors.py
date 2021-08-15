@@ -8,7 +8,7 @@ A few notes about error handling for the person correcting this:
 > I have chosen to allow blank lines after the hlt instruction at the end. I think   	those are commonly seen in programs and it is acceptable to ignore them.
 > It is told to mark errors for invalid usage of FLAGS register or accidental swapping of label and variable names. I have merged these into invalid register name / invalid label name / invalid variable name errors, because I think none of these are things that deserve special errors. That being said, the errors are definitely displayed.
 """
-
+insts = json.load(open('instructions.json'))
 def check_variant(variant, line, PC):  
 	"checks if the command is broadly valid for the variant identified"
 
@@ -27,8 +27,13 @@ def check_variant(variant, line, PC):
 		if PC>0:
 			found = True
 			errors.append('Variable defined after start of program')
-	if variant == 'instruction':		
-		pass 
+	if variant == 'instruction':
+		params = line.split()	
+		if len(params) == 0 or params[0] not in insts:  		# if invalid instruction category
+			found = True
+			errors.append('Instruction missing or unidentified')
+		return (found, errors)
+		
 	
 	"""
 	Look up f-strings and split function in python! They will be helpful here. 
