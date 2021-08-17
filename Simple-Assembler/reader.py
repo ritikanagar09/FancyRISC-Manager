@@ -41,13 +41,14 @@ def encode(opc,ctg,cmd,mem: memory.Memory):
 
 	params = cmd.split()
 	toret = ""
-	
+	# add R0 R1 R2 => params = ['add','R0','R1','R2']
 	if ctg == 'A':
-		toret += f'{opc:05b}'
-		toret += f'{0:02b}'
-		toret += f'{int(params[1][1]):03b}'
-		toret += f'{int(params[2][1]):03b}'
-		toret += f'{int(params[3][1]):03b}'
+		toret += f'{opc:05b}' # opc = 0 => 0 to 5 bit binary => 00000
+		toret += f'{0:02b}' # unused 2 bits => 0 to 2 bit binary => 00
+		toret += f'{int(params[1][1]):03b}' # R0 => 0 => 0 to 3 bit binary => 000
+		toret += f'{int(params[2][1]):03b}' # R1 => 1 => 1 to 3 bit binary => 001
+		toret += f'{int(params[3][1]):03b}' # R2 => 2 => 2 to 3 bit binary => 010 
+		# toret = "0000000000001010"
 	
 	elif ctg == 'B':
 		toret += f'{opc:05b}'

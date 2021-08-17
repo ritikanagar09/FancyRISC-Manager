@@ -47,7 +47,8 @@ for line_num, line in enumerate(fl):
 PC = 0
 # SECOND PASS
 for line_num, line in enumerate(fl): 
-	lookahead = len([1 for x in fl[line_num:] if x.strip() != '']) > 1
+	# am i not on the last line?
+	lookahead = len([1 for x in fl[line_num:] if x.strip() != '']) > 1 # are there any non-blank lines ahead of this line
 	line = line.strip() 
 
 	if(not lookahead):
@@ -58,14 +59,14 @@ for line_num, line in enumerate(fl):
 	error = check_variant(variant, line, PC)
 
 	if variant == 'label':  # will always be followed by instruction
-		# Turns label into instruction
+		# Turns label into instruction 'labelname: add R0 R1 R2' => 'add R0 R1 R2'
 		line = line.split(':')[1].lstrip()  
 		variant = find_variant(line)
 		check_variant(variant, line, PC)
 	
 	if (error[0] == True):  # variant error handling
 		err.log_error(line_num+1, error[1])
-		continue 
+		continue # stop processing the line here, go to the next line
 
 	if variant == 'blank' or variant == 'variable':
 		continue
@@ -74,7 +75,7 @@ for line_num, line in enumerate(fl):
 
 	if variant in ('label','instruction'):  # common handler for instructions with and without label
 		# category identification
-		opc, cat = find_cat(line)['opcode'], find_cat(line)['cat']
+		opc, cat = find_cat(line)['opcode'], find_cat(line)['cat'] # 'add R0 R1 R2' => {'opcode':0,'cat':'A'}
 		
 		#print(f'{line_num}: {lookahead}')
 		error = check_cat(opc, cat, line, mem, lookahead) 
@@ -85,9 +86,9 @@ for line_num, line in enumerate(fl):
 			continue
 
 		# encoding 
-		buffer = encode(opc, cat, line, mem)
+		buffer = encode(opc, cat, line, mem)  # Input - 0, A, add R0 R1 R2, mem ; Out -> 010010101010101
 
-		commands.append(buffer)
+		commands.append(buffer) # ['000100','0110101','011101','010011'] <- all will be 16 bits
 
 if err.errors_present():
 	print('\n'.join(err.get_errors()))

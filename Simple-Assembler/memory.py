@@ -5,9 +5,9 @@ class Memory():
   #mem_vars = {} 
 
   def __init__(self, m):
-    self.mem = m
-    self.mem_labels = {}
-    self.mem_vars = {}
+    self.mem = m  # where will the next variable be added
+    self.mem_labels = {}  # PC of all labels
+    self.mem_vars = {}  # memory address of all variables
 
   def has_label(self,name):
     "checks if a certain label is present in the memory"
