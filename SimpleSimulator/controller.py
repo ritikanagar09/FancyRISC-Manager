@@ -43,62 +43,67 @@ class CU:
 				reg.read_reg(int(line[10:13], base = 2)),
 				reg.read_reg(int(line[13:], base = 2))
 			]
+
 		elif cat=='B':
 			sources = [
 			reg.read_reg(int(line[5:8], base = 2)),
 			int(line[8:], base = 2)
 			]
 			
-			elif cat=='C':
+		elif cat=='C':
 			sources = [
 				reg.read_reg(int(line[10:13], base = 2)),
 				reg.read_reg(int(line[13:], base = 2))
 		]	
-			elif cat=='D':
+		elif cat=='D':
 			sources = [
 				reg.read_reg(int(line[5:8], base = 2)),
 				mem.read_loc(int(line[8:], base = 2))
 			]
 			
-			elif cat=='E':
+		elif cat=='E':
 			sources = [
 				mem.read_loc(int(line[8:], base = 2))
 			]
 			
-			elif cat=='F':
+		elif cat=='F':
 			sources = []
+
 		return sources
 	
 
 	@staticmethod
 	def fetch_destinations(cat: int, line: str) -> list:
 		"gets the values used as destination operand/s by a line of code"
+		
 		if cat == 'A':
 			dests = [
 				int(line[7:10], base = 2)
 			]
 		
-		if cat == 'B':
+		elif cat == 'B':
 			dests = [
 				int(line[5:8], base = 2)
 			]
 			
-		if cat == 'C':
+		elif cat == 'C':
 			dests = [
-				int(line[10:13], base = 2)
+				int(line[10:13], base = 2),
 				int(line[13:], base = 2)
 			]
 		
-		if cat == 'D':
+		elif cat == 'D':
 			dests = [
-				int(line[5:8], base = 2)
+				int(line[5:8], base = 2),
 				int(line[8:], base = 2)
 			]
 
 		elif cat == 'E':
 			dests = []
+
 		elif cat == 'F':
 			dests = []
+
 		return dests
 	
 	@staticmethod
