@@ -3,7 +3,7 @@ class LU:
 		"adds two integers"
 		return {
 			'main': params[0] + params[1],
-			'flags': f"{int(params[0] + params[1] > 255)}000"
+			'flags': int(f"{int(params[0] + params[1] > 255)}000", base = 2)
 		}
 
 	def sub(params):
@@ -12,9 +12,14 @@ class LU:
 			'main': params[0] - params[1]
 		}
 
+	def hlt(params):
+		"stops running code"
+		return {}
+
 	switcher = {
 		0: add,
-		1: sub
+		1: sub,
+		19: hlt
 	}
 
 	@classmethod
@@ -32,9 +37,16 @@ class LU:
 
 		it is to be noted that the alter, branch, and flags values can be merged into one; but they are kept separate for clearer documentation.
 		"""
-		return {
-			'main'  : cls.switcher[opc](params)['main'],
-			'alter' : cls.switcher[opc](params)['alter'] or 0,
-			'branch': cls.switcher[opc](params)['branch'] or 0,
-			'flags' : cls.switcher[opc](params)['flags'] or '0000'
+		toret = {
+			'main'  : 0,
+			'alter' : 0,
+			'branch': 0,
+			'flags' : 0,
 		}
+
+		gotten = cls.switcher[opc](params)
+
+		for x in gotten:
+			toret[x] = gotten[x]
+
+		return toret

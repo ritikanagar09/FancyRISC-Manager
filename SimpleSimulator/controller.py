@@ -12,7 +12,7 @@ class CU:
 	def get_type_from_opcode(cls, opc: int) -> str:
 		"returns the type of the command from its opcode"
 		for inst in cls.insts:  # Iterates through each instruction name
-			for form in inst:  # Iterates through forms of each instruction
+			for form in cls.insts[inst]:  # Iterates through forms of each instruction
 				if form['opcode'].endswith(f'{opc:05b}'):
 					return form['type']
 
@@ -22,21 +22,10 @@ class CU:
 		return (opc,cls.get_type_from_opcode(opc))
 
 	@classmethod
-	def fetch_sources(cls, opc, cat, line, mem: Memory, reg: Registry) -> dict:
+	def fetch_sources(cls, cat, line, mem: Memory, reg: Registry) -> dict:
 		"gets the values used as source operand/s by a line of code, along with opcode and category"
 
-		sources = [] # TODO: Get these according to category
-
-		"""
-		To read value in a register location:
-			-> reg.read_reg(int('001', base = 2)),
-		
-		To read value in a memory location:
-		  -> mem.read_loc(int('00100010', base = 2))
-
-		To read an immediate:
-		  -> int('00100010', base = 2)
-		"""
+		sources = [] 
 
 		if cat == 'A':
 			sources = [
@@ -134,6 +123,7 @@ class CU:
 
 		elif cat in ('B','A'):
 			reg.write_reg(dests[0], output['main'])
+			reg.set_flags(output['flags'])
 
 		return True
 
@@ -145,3 +135,5 @@ class CU:
 			reg.branch_to(output['main'])
 		else:
 			reg.branch_to(reg.PC+1)
+
+CU.get_type_from_opcode(0)

@@ -9,15 +9,15 @@ mem = Memory(256)
 reg = Registry()
 
 for i,line in enumerate(sys.stdin):
-	mem.write_loc(i,line)
+	mem.write_loc(i,int(line, base=2))
 
 while lookahead:
-	line = mem.read_loc(reg.PC)  # open line
+	line = f'{mem.read_loc(reg.PC):016b}'  # open line
 
 	(opc, cat) = CU.interpret(line)  # read type of line and its opcode
 
-	srcs = CU.fetch_sources(opc, cat, line)  # get needed source VALUES
-	dests = CU.fetch_destinations(opc, cat, line)  # get needed destination LOCATIONS
+	srcs = CU.fetch_sources(cat, line, mem, reg)  # get needed source VALUES
+	dests = CU.fetch_destinations(cat, line)  # get needed destination LOCATIONS
 
 	out = LU.call(opc, srcs)  # perform any ALU-related execution needed
 

@@ -4,7 +4,7 @@ class Registry:
 		#  starting values are given only for documentation purposes
 		self.PC = 0b0000_0000
 		self.FLAGS = 0b0000_0000_0000_0000
-		self.regs = [0b0000_0000_0000_0000]*6  # general purpose registers
+		self.regs = [0b0000_0000_0000_0000]*7  # general purpose registers
 
 	def write_reg(self, loc: int, val: int):
 		"writes a value to a certain register"
@@ -20,7 +20,7 @@ class Registry:
 
 	def spit_PC(self):
 		"gets program counter in a printble format"
-		print(f"{self.PC:08b} ")
+		print(f"{self.PC:08b} ", end = '')
 
 	def branch_to(self, loc: int):
 		"branches to a named instruction"
@@ -29,7 +29,7 @@ class Registry:
 
 	def spit_registry(self):
 		"returns the full data within the registry, including flags"
-		print(" ".join(self.regs+[self.FLAGS]))
+		print(" ".join([f'{x:016b}' for x in (self.regs+[self.FLAGS])]), end = ' \n')
 
 class Tracer:
 	traces = []
@@ -69,4 +69,4 @@ class Memory:
 
 	def spit(self):
 		"returns the full data within the memory"
-		return "\n".join(self.mem)
+		print("\n".join([f'{x:016b}' for x in self.mem])) 
