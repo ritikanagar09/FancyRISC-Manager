@@ -24,7 +24,7 @@ class Registry:
 
 	def branch_to(self, loc: int):
 		"branches to a named instruction"
-		Tracer.log_endline()
+		Tracer.log_endline(loc)
 		self.PC = loc
 
 	def spit_registry(self):
@@ -45,9 +45,9 @@ class Tracer:
 		Tracer.traces.append(('W',loc))
 
 	@staticmethod
-	def log_endline():
+	def log_endline(loc: int):
 		"marks the end of the line"
-		Tracer.traces.append('E')
+		Tracer.traces.append(('E',loc))
 
 	def get_all_traces():
 		return Tracer.traces

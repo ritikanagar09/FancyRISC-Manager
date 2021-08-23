@@ -12,14 +12,21 @@ class LU:
 			'main': params[0] - params[1]
 		}
 
+	def movr(params):
+		pass
+
+	def movi(params):
+		pass
+
 	def hlt(params):
 		"stops running code"
 		return {}
 
 	switcher = {
-		0: add,
-		1: sub,
-		19: hlt
+		0b00000: add,
+		0b00001: sub,
+		#0b00110: mul,
+		0b10011: hlt
 	}
 
 	@classmethod
