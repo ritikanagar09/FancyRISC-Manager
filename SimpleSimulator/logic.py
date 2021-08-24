@@ -16,7 +16,7 @@ class LU:
 		"multiply two integers"
 		return {
 			'main': params[0] * params[1],
-			'flags':int(f"{int(params[0] * params[1] > 255)}110", base = 2)
+			'flags':int(f"{int(params[0] * params[1] > 255)}000", base = 2)
 		}
 	
 	def xor(params):
@@ -24,13 +24,13 @@ class LU:
 		return {
 			'main': params[0] ^ params[1],
 		}
-	def or(params):
+	def orr(params):
 		"Performs bitwise OR operation"
 		return {
 			'main': params[0] | params[1],
 		}
 
-	def and(params):
+	def andr(params):
 		"Performs bitwise AND operation"
 		return {
 			'main': params[0] & params[1],
@@ -50,6 +50,9 @@ class LU:
 		0b00000: add,
 		0b00001: sub,
 		0b00110: mul,
+		0b01010: orr,
+		0b01100: andr,
+		0b01101: notr,
 		0b10011: hlt,
 	}
 
