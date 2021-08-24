@@ -16,7 +16,7 @@ class LU:
 		"multiply two integers"
 		return {
 			'main': params[0] * params[1],
-			'flags':int(f"{int(params[0] * params[1] > 255)}110", base = 2)
+			'flags':int(f"{int(params[0] * params[1] > 255)}000", base = 2)
 		}
 	
 	def xor(params):
@@ -24,34 +24,25 @@ class LU:
 		return {
 			'main': params[0] ^ params[1],
 		}
-	def or(params):
+	def orr(params):
 		"Performs bitwise OR operation"
 		return {
 			'main': params[0] | params[1],
 		}
 
-	def and(params):
+	def andr(params):
 		"Performs bitwise AND operation"
 		return {
 			'main': params[0] & params[1],
 		}
+
 	def cmp(params):
 		"Compares two integers"
-		
-		if params[0]==params[1]:
-			return {
-				'flags': int(f"{int(params[0] == params[1])}")
+		return {
+			'flags': int(
+					f"0{int(params[0] < params[1])}{int(params[0] > params[1])}{int(params[0] == params[1])}"
+				)
 		}
-		elif params[0]<params[1]:
-			return {
-				'flags': int(f"{int(params[0] < params[1])}00")
-		}
-		else:
-			return {
-				'flags': int(f"{int(params[0] > params[1])}0")
-		}
-			
-	
 
 	def movr(params):
 		pass
@@ -67,7 +58,10 @@ class LU:
 		0b00000: add,
 		0b00001: sub,
 		0b00110: mul,
+		0b01010: orr,
+		0b01100: andr,
 		0b10011: hlt,
+		0b01110: cmp
 	}
 
 	@classmethod
