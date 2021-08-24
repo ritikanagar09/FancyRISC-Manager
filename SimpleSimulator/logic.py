@@ -16,6 +16,7 @@ class LU:
 		"multiply two integers"
 		return {
 			'main': params[0] * params[1],
+			'flags':int(f"{int(params[0] * params[1] > 255)}110", base = 2)
 		}
 	
 	def xor(params):
