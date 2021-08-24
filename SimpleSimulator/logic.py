@@ -9,7 +9,30 @@ class LU:
 	def sub(params):
 		"subtracts two integers"
 		return {
-			'main': params[0] - params[1]
+			'main': params[0] - params[1],
+		}
+	
+	def mul(params):
+		"multiply two integers"
+		return {
+			'main': params[0] * params[1],
+		}
+	
+	def xor(params):
+		"Performs bitwise XOR operation"
+		return {
+			'main': params[0] ^ params[1],
+		}
+	def or(params):
+		"Performs bitwise OR operation"
+		return {
+			'main': params[0] | params[1],
+		}
+
+	def and(params):
+		"Performs bitwise AND operation"
+		return {
+			'main': params[0] & params[1],
 		}
 
 	def movr(params):
@@ -25,8 +48,8 @@ class LU:
 	switcher = {
 		0b00000: add,
 		0b00001: sub,
-		#0b00110: mul,
-		0b10011: hlt
+		0b00110: mul,
+		0b10011: hlt,
 	}
 
 	@classmethod
