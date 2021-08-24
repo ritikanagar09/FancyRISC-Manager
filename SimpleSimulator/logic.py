@@ -35,6 +35,23 @@ class LU:
 		return {
 			'main': params[0] & params[1],
 		}
+	def cmp(params):
+		"Compares two integers"
+		
+		if params[0]==params[1]:
+			return {
+				'flags': int(f"{int(params[0] == params[1])}")
+		}
+		elif params[0]<params[1]:
+			return {
+				'flags': int(f"{int(params[0] < params[1])}00")
+		}
+		else:
+			return {
+				'flags': int(f"{int(params[0] > params[1])}0")
+		}
+			
+	
 
 	def movr(params):
 		pass
