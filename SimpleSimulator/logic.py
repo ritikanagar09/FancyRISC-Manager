@@ -19,6 +19,13 @@ class LU:
 			'flags':int(f"{int(params[0] * params[1] > 255)}000", base = 2)
 		}
 	
+	def div(params):
+		"divides two integers"
+		return {
+			'main': params[0] // params[1],
+			'alter': params[0] % params[1]
+		}
+
 	def xor(params):
 		"performs bitwise XOR operation"
 		return {
@@ -51,11 +58,33 @@ class LU:
 				)
 		}
 
+	# je, jlt, jgt, movr, movi, rs, ls, div, ld, st
+
 	def movr(params):
-		pass
+		return {
+			'main': params[1]
+		}
+
+	def ld(params):
+		return {
+			'main': params[1]
+		}
+
+	def st(params):
+		return {
+			'main': params[0]
+		}
 
 	def movi(params):
-		pass
+		return {
+			'main': params[1]
+		}
+
+	def jgt(params):
+		return {
+			'main': params[0],
+			'branch': int(f'{params[1]:016b}'[-2])
+		}
 
 	def hlt(params):
 		"stops running code"

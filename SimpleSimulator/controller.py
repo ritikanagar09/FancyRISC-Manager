@@ -57,7 +57,8 @@ class CU:
 			
 		elif cat=='E':
 			sources = [
-				mem.read_loc(int(line[8:], base = 2))
+				mem.read_loc(int(line[8:], base = 2)),
+				reg.FLAGS
 			]
 			
 		elif cat=='F':
