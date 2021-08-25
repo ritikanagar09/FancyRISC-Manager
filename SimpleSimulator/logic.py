@@ -81,13 +81,60 @@ class LU:
 		return {
 			'main': params[1]
 		}
+	def jmp(params):
+		'Jumps to memory address.'
+		return {
+			'main': params[0],
+			'branch': int(f'{params[1]:016b}'[0])
+		}
 
 	def jgt(params):
-		"jump if greater than"
+		'Jump to memory address ifthe greater than flag is set'
 		return {
 			'main': params[0],
 			'branch': int(f'{params[1]:016b}'[-2])
 		}
+	def jlt(params):
+		'Jump to memory address if the less than flag is set'
+		return{
+			'main':params[0],
+			'branch': int(f'{params[1]:016b}'[-3])
+			
+		}
+	def je(params):
+		'Jump to memory address if the equal flag is set'
+		return{
+			'main':params[0],
+			'branch': int(f'{params[1]:016b}'[-1])
+			
+		}
+	def div(params):
+		"divides two integers"
+		return {
+			'main': params[0] // params[1],
+			'alter': params[0] % params[1]
+		}
+	
+	def cmp(params):
+		"Compares two integers"
+		return {
+			'flags': int(
+					f"0{int(params[0] < params[1])}{int(params[0] > params[1])}{int(params[0] == params[1])}"
+				)
+		}
+
+	def rs(params):
+		'Right shifts register by an immediate value.'
+		return {
+			'main': params[0] >> params[1]
+		}
+	
+	def ls(params):
+		'left shifts register by an immediate value'
+		return{
+			'main':params[0] << params[1]
+		}
+		
 
 	def hlt(params):
 		"stops running code"
