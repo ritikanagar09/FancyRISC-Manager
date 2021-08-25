@@ -49,70 +49,41 @@ class LU:
 		return{
 			"main": ~ params[1]
 		}
-		
-	def movr(params):
-		return {
-			'main': params[1]
-		}
 
-	def ld(params):
-		return {
-			'main': params[1]
-		}
-
-	def st(params):
-		return {
-			'main': params[0]
-		}
-
-	def movi(params):
-		return {
-			'main': params[1]
-		}
-
-	def jgt(params):
-		return {
-			'main': params[0],
-			'branch': int(f'{params[1]:016b}'[-2])
-		}
-	def div(params):
-		"divides two integers"
-		return {
-			'main': params[0] // params[1],
-			'alter': params[0] % params[1]
-		}
-	
 	def cmp(params):
-		"Compares two integers"
+		"compares two integers"
 		return {
 			'flags': int(
 					f"0{int(params[0] < params[1])}{int(params[0] > params[1])}{int(params[0] == params[1])}"
 				)
 		}
 
-	# je, jlt, jgt, movr, movi, rs, ls, div, ld, st
-
 	def movr(params):
+		"move from register to register"
 		return {
 			'main': params[1]
 		}
 
 	def ld(params):
+		"load from memory to register"
 		return {
 			'main': params[1]
 		}
 
 	def st(params):
+		"store register in memory"
 		return {
 			'main': params[0]
 		}
 
 	def movi(params):
+		"move immediate to register"
 		return {
 			'main': params[1]
 		}
 
 	def jgt(params):
+		"jump if greater than"
 		return {
 			'main': params[0],
 			'branch': int(f'{params[1]:016b}'[-2])
