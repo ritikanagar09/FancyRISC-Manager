@@ -5,12 +5,14 @@ class CU:
 	@staticmethod
 	def get_opcode(line):
 		"returns the opcode of a line"
+		
 		return int(line[0:5], base=2)
 
 	insts = json.load(open('../Simple-Assembler/instructions.json'))
 	@classmethod
 	def get_type_from_opcode(cls, opc: int) -> str:
 		"returns the type of the command from its opcode"
+		
 		for inst in cls.insts:  # Iterates through each instruction name
 			for form in cls.insts[inst]:  # Iterates through forms of each instruction
 				if form['opcode'].endswith(f'{opc:05b}'):
@@ -18,12 +20,14 @@ class CU:
 
 	@classmethod
 	def interpret(cls, line):
+		"gets the opcode and category of the command"
+
 		opc = cls.get_opcode(line)
 		return (opc,cls.get_type_from_opcode(opc))
 
 	@classmethod
 	def fetch_sources(cls, cat, line, mem: Memory, reg: Registry) -> dict:
-		"gets the values used as source operand/s by a line of code, along with opcode and category"
+		"gets the values used as source operand/s by a line of code"
 
 		sources = [] 
 
@@ -44,6 +48,7 @@ class CU:
 				reg.read_reg(int(line[10:13], base = 2)),
 				reg.read_reg(int(line[13:], base = 2))
 		]	
+
 		elif cat=='D':
 			sources = [
 				reg.read_reg(int(line[5:8], base = 2)),

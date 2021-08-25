@@ -20,20 +20,27 @@ class LU:
 		}
 	
 	def xor(params):
-		"Performs bitwise XOR operation"
+		"performs bitwise XOR operation"
 		return {
 			'main': params[0] ^ params[1],
 		}
+
 	def orr(params):
-		"Performs bitwise OR operation"
+		"performs bitwise OR operation"
 		return {
 			'main': params[0] | params[1],
 		}
 
 	def andr(params):
-		"Performs bitwise AND operation"
+		"performs bitwise AND operation"
 		return {
 			'main': params[0] & params[1],
+		}
+
+	def notr(params):
+		"performs bitwise NOT operation"
+		return{
+			"main": ~ params[1]
 		}
 
 	def movr(params):
@@ -51,6 +58,8 @@ class LU:
 		0b00001: sub,
 		0b00110: mul,
 		0b01010: orr,
+		0b00010: movi,
+		0b00011: movr,
 		0b01100: andr,
 		0b01101: notr,
 		0b10011: hlt,
