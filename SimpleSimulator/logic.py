@@ -50,6 +50,38 @@ class LU:
 			"main": ~ params[1]
 		}
 		
+	def movr(params):
+		return {
+			'main': params[1]
+		}
+
+	def ld(params):
+		return {
+			'main': params[1]
+		}
+
+	def st(params):
+		return {
+			'main': params[0]
+		}
+
+	def movi(params):
+		return {
+			'main': params[1]
+		}
+
+	def jgt(params):
+		return {
+			'main': params[0],
+			'branch': int(f'{params[1]:016b}'[-2])
+		}
+	def div(params):
+		"divides two integers"
+		return {
+			'main': params[0] // params[1],
+			'alter': params[0] % params[1]
+		}
+	
 	def cmp(params):
 		"Compares two integers"
 		return {
