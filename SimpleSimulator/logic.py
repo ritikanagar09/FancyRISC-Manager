@@ -44,16 +44,19 @@ class LU:
 		}
 		
 	def movr(params):
+		'Moves one register value to another register'
 		return {
 			'main': params[1]
 		}
 
 	def ld(params):
+		'Loads data from memory into register.'
 		return {
 			'main': params[1]
 		}
 
 	def st(params):
+		'Stores data from register to memory address.'
 		return {
 			'main': params[0]
 		}
@@ -62,11 +65,32 @@ class LU:
 		return {
 			'main': params[1]
 		}
+	def jmp(params):
+		'Jumps to memory address.'
+		return {
+			'main': params[0],
+			'branch': int(f'{params[1]:016b}'[0])
+		}
 
 	def jgt(params):
+		'Jump to memory address ifthe greater than flag is set'
 		return {
 			'main': params[0],
 			'branch': int(f'{params[1]:016b}'[-2])
+		}
+	def jlt(params):
+		'Jump to memory address if the less than flag is set'
+		return{
+			'main':params[0],
+			'branch': int(f'{params[1]:016b}'[-3])
+			
+		}
+	def je(params):
+		'Jump to memory address if the equal flag is set'
+		return{
+			'main':params[0],
+			'branch': int(f'{params[1]:016b}'[-1])
+			
 		}
 	def div(params):
 		"divides two integers"
@@ -83,11 +107,20 @@ class LU:
 				)
 		}
 
-	def movr(params):
-		pass
+	def rs(params):
+		'Right shifts register by an immediate value.'
+		return {
+			'main': params[0] >>
+		}
+	
+		
 
-	def movi(params):
-		pass
+	def ls(params):
+		'left shifts register by an immediate value'
+		return{
+			'main':params[0] <<
+		}
+		
 
 	def hlt(params):
 		"stops running code"
