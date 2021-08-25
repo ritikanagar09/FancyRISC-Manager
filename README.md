@@ -11,4 +11,5 @@ Repository for Computer Organization, Monsoon 2021 semester, assignment at IIITD
 
 Current progress: 
 Assembler Done!
-Simulator - One Test case working, 85% work over.
+Simulator Done!
+

@@ -12,11 +12,13 @@ class Registry:
 
 	def read_reg(self, loc: int):
 		"reads a value from a certain register"
+		if loc == 7:
+			return self.FLAGS
 		return self.regs[loc]
 
-	def set_flags(self, flags: int):
+	def set_flags(self, flags: str):
 		"sets the flags register with the given flags"
-		f"{0:012b}{flags:04b}"
+		self.FLAGS = int(f"{0:012b}{flags}", base = 2)
 
 	def spit_PC(self):
 		"gets program counter in a printble format"

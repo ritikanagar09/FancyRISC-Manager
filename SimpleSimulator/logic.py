@@ -81,28 +81,31 @@ class LU:
 		return {
 			'main': params[1]
 		}
+
 	def jmp(params):
-		'Jumps to memory address.'
+		"jumps to memory address."
 		return {
 			'main': params[0],
 			'branch': int(f'{params[1]:016b}'[0])
 		}
 
 	def jgt(params):
-		'Jump to memory address ifthe greater than flag is set'
+		"jumps to memory address if the greater than flag is set"
 		return {
 			'main': params[0],
 			'branch': int(f'{params[1]:016b}'[-2])
 		}
+
 	def jlt(params):
-		'Jump to memory address if the less than flag is set'
+		"jumps to memory address if the less than flag is set"
 		return{
 			'main':params[0],
 			'branch': int(f'{params[1]:016b}'[-3])
 			
 		}
+
 	def je(params):
-		'Jump to memory address if the equal flag is set'
+		"jumps to memory address if the equal flag is set"
 		return{
 			'main':params[0],
 			'branch': int(f'{params[1]:016b}'[-1])
@@ -116,7 +119,7 @@ class LU:
 		}
 	
 	def cmp(params):
-		"Compares two integers"
+		"compares two integers"
 		return {
 			'flags': int(
 					f"0{int(params[0] < params[1])}{int(params[0] > params[1])}{int(params[0] == params[1])}"
@@ -124,13 +127,13 @@ class LU:
 		}
 
 	def rs(params):
-		'Right shifts register by an immediate value.'
+		"right shifts register by an immediate value."
 		return {
 			'main': params[0] >> params[1]
 		}
 	
 	def ls(params):
-		'left shifts register by an immediate value'
+		"left shifts register by an immediate value"
 		return{
 			'main':params[0] << params[1]
 		}
@@ -143,14 +146,24 @@ class LU:
 	switcher = {
 		0b00000: add,
 		0b00001: sub,
-		0b00110: mul,
-		0b01010: orr,
 		0b00010: movi,
 		0b00011: movr,
+		0b00100: ld,
+		0b00101: st,
+		0b00110: mul,
+		0b00111: div, 
+		0b01000: rs, 
+		0b01001: ls,
+		0b01010: xor,
+		0b01011: orr,
 		0b01100: andr,
 		0b01101: notr,
+		0b01110: cmp,
+		0b01111: jmp,
+		0b10000: jlt,
+		0b10001: jgt,
+		0b10010: je,
 		0b10011: hlt,
-		0b01110: cmp
 	}
 
 	@classmethod

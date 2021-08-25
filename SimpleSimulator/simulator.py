@@ -31,14 +31,12 @@ while lookahead:
 
 mem.spit()  # print memory once all job is done
 traces = Tracer.get_all_traces()  # gets all traces from the tracer
-#traces_read = [x for x in traces if x[0] == 'R']
+
 traces_read_x = []
 traces_read_y = []
 traces_write_x = []
 traces_write_y = []
-#traces_write = [x for x in traces if x[0] == 'W']
-#traces_endline = [x for x in traces if x[0] == 'E']
-print(traces)
+
 l = 0
 for x in traces:
 	if x[0] == 'R':
@@ -50,8 +48,6 @@ for x in traces:
 	else:
 		l+=1
 
-#x = np.array(range(len(traces)))
-#y = np.array([x[1] for x in traces])
 plt.scatter(traces_read_x, traces_read_y, marker = 'x', color = 'b', linewidths=1)
 plt.scatter(traces_write_x, traces_write_y, marker = 'x', color = 'r', linewidths=1)
-plt.savefig('test.png',dpi = 1200)
+plt.savefig('test.png',dpi = 300)

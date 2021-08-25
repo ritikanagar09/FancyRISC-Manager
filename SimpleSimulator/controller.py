@@ -112,7 +112,7 @@ class CU:
 
 		elif cat == 'D':
 			if opc & 1:
-				mem.write_loc(dests[0], output['main'])
+				mem.write_loc(dests[1], output['main'])
 			else:
 				reg.write_reg(dests[0], output['main'])
 
