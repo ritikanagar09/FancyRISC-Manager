@@ -34,6 +34,7 @@ class Registry:
 		print(" ".join([f'{x:016b}' for x in (self.regs+[self.FLAGS])]), end = ' \n')
 
 class Tracer:
+	"logs memory access traces for bonus question"
 	traces = []
 
 	@staticmethod
@@ -52,7 +53,23 @@ class Tracer:
 		Tracer.traces.append(('E',loc))
 
 	def get_all_traces():
-		return Tracer.traces
+		traces_read_x = []
+		traces_read_y = []
+		traces_write_x = []
+		traces_write_y = []
+
+		l = 0
+		for x in Tracer.traces:
+			if x[0] == 'R':
+				traces_read_x.append(l)
+				traces_read_y.append(x[1])
+			elif x[0] == 'W':
+				traces_write_x.append(l)
+				traces_write_y.append(x[1])
+			else:
+				l+=1
+
+		return {'x':{'read':traces_read_x,'write':traces_write_x},'y':{'read':traces_read_y,'write':traces_write_y}}
 
 class Memory:
 	def __init__(self, size: int):

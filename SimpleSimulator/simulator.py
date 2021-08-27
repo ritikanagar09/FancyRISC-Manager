@@ -6,9 +6,11 @@ from matplotlib import pyplot as plt
 import numpy as np
 
 lookahead = True
+# initialise memory and registry
 mem = Memory(256)
 reg = Registry()
 
+# load file into memory
 for i,line in enumerate(sys.stdin):
 	mem.write_loc(i,int(line, base=2))
 
@@ -32,22 +34,9 @@ while lookahead:
 mem.spit()  # print memory once all job is done
 traces = Tracer.get_all_traces()  # gets all traces from the tracer
 
-traces_read_x = []
-traces_read_y = []
-traces_write_x = []
-traces_write_y = []
-
-l = 0
-for x in traces:
-	if x[0] == 'R':
-		traces_read_x.append(l)
-		traces_read_y.append(x[1])
-	elif x[0] == 'W':
-		traces_write_x.append(l)
-		traces_write_y.append(x[1])
-	else:
-		l+=1
-
-plt.scatter(traces_read_x, traces_read_y, marker = 'x', color = 'b', linewidths=1)
-plt.scatter(traces_write_x, traces_write_y, marker = 'x', color = 'r', linewidths=1)
+plt.scatter(traces['x']['read'], traces['y']['read'], marker = 'x', color = 'b', linewidths=1, label = 'Read Traces')
+plt.scatter(traces['x']['write'], traces['y']['write'], marker = '+', color = 'r', linewidths=1, label = 'Write Traces')
+plt.xlabel('PC', fontsize=16)
+plt.ylabel('Memory Accessed', fontsize=16)
+plt.legend()
 plt.savefig('test.png',dpi = 300)

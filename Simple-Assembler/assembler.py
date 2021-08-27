@@ -29,11 +29,11 @@ for line_num, line in enumerate(fl):
 	variant = find_variant(line)
 	error = check_variant(variant, line, PC)
 
-	if variant == 'label':  # will always be followed by instruction
-		mem.store_label(line.split(':')[0], PC)
-	
 	if (error[0] == True):  # variant error handling
 		continue 
+
+	if variant == 'label':  # will always be followed by instruction
+		mem.store_label(line.split(':')[0], PC)
 
 	if variant == 'blank':
 		continue
